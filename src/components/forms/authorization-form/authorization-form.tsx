@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Button, Form, Input, Loader, Title } from '../../ui';
+import { Button, Form, Input, Loader } from '../../ui';
 import { authService } from '../../../services/auth';
 import { emailRegex } from '../../../utils';
 import { useNavigate } from 'react-router-dom';
@@ -28,9 +28,8 @@ export const AuthorizationForm: FC = () => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <Title>Авторизация</Title>
       <Input
-        label="Логин"
+        placeholder="Логин"
         value={watch('email')}
         error={errors.email?.message}
         {...register('email', {
@@ -42,7 +41,7 @@ export const AuthorizationForm: FC = () => {
         })}
       />
       <Input
-        label="Пароль"
+        placeholder="Пароль"
         type="password"
         value={watch('password')}
         error={errors.password?.message}

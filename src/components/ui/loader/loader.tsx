@@ -7,8 +7,6 @@ export const Loader: FC = () => {
       <S.Loader>
         <div></div>
         <div></div>
-        <div></div>
-        <div></div>
       </S.Loader>
     </S.Wrap>
   );

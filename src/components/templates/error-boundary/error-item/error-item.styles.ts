@@ -13,3 +13,10 @@ export const Wrap = styled.div`
     outline: 1px solid #1d1d1f;
   }
 `;
+
+export const IconWrap = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+`;

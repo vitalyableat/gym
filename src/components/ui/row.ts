@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Row = styled.div`
+export const Row = styled.div<{ gap?: string }>`
   display: flex;
-  gap: 15px;
+  gap: ${({ gap }) => gap};
 `;

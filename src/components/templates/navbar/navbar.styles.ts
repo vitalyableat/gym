@@ -13,20 +13,19 @@ export const Navbar = styled.div`
   z-index: 2;
   padding: 20px 80px;
   gap: 20px;
+
+  div:first-child {
+    flex-grow: 1;
+  }
 `;
 
 export const StyledLink = styled(Link)<{ selected: boolean }>`
   text-decoration: none;
   line-height: 20px;
-  color: ${({ selected }) => (selected ? '#5083be' : '#41418d')};
+  color: ${({ selected }) => (selected ? '#6666ee' : '#4242aa')};
+  white-space: nowrap;
 
   :hover {
     text-decoration: underline;
   }
-`;
-
-export const Logo = styled.div`
-  font-size: 32px;
-  color: #1e5082;
-  flex-grow: 1;
 `;

@@ -1,12 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 import * as S from './navbar.styles';
 import { NAVBAR_LINKS } from './navbar.constants';
 import { userService } from '../../../services/user';
-import { observer } from 'mobx-react-lite';
-import { Loader } from '../../ui';
-import { Logo } from './navbar.styles';
+import { Loader, Text } from '../../ui';
 
 export const Navbar: FC = observer(() => {
   const { pathname } = useLocation();
@@ -19,7 +18,9 @@ export const Navbar: FC = observer(() => {
   return (
     <>
       <S.Navbar>
-        <S.Logo>{'IL<KA>GYM'}</S.Logo>
+        <Text type="title" bold color="#336699">
+          {'IL<KA>GYM'}
+        </Text>
         {NAVBAR_LINKS.map(({ name, link }) => (
           <S.StyledLink key={name} to={link} selected={pathname === link}>
             {name}

@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, useEffect } from 'react';
+import { GrFormClose } from 'react-icons/gr';
 import * as S from './error-item.styles';
-import { CloseIcon } from '../../../ui/icons';
 import { errorService } from '../../../../services/error';
 import { ErrorItemProps } from './error-item.types';
 
@@ -12,7 +12,9 @@ export const ErrorItem: FC<PropsWithChildren<ErrorItemProps>> = ({ children, id 
 
   return (
     <S.Wrap>
-      <CloseIcon width="15px" onClick={() => errorService.removeError(id)} />
+      <S.IconWrap onClick={() => errorService.removeError(id)}>
+        <GrFormClose />
+      </S.IconWrap>
       {children}
     </S.Wrap>
   );
