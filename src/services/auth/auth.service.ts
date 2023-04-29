@@ -1,10 +1,11 @@
 import { action, makeObservable, observable } from 'mobx';
-import { getFromLocalStorage } from '../../utils';
-import { AuthenticateData, IAuthService, RegisterData } from './auth.types';
-import { userService } from '../user';
 import { publicApi } from '../index';
+import { getFromLocalStorage } from '../../utils';
+import { userService } from '../user';
+import { AuthenticateData, IAuthService, RegisterData } from './auth.types';
 
 class AuthService implements IAuthService {
+  endpoint = 'user' as const;
   token$ = getFromLocalStorage('token') || '';
 
   constructor() {
@@ -20,15 +21,21 @@ class AuthService implements IAuthService {
   }
 
   async authenticate(authenticateData: AuthenticateData) {
-    const { data } = await publicApi.post('user/authenticate', authenticateData);
+    const { data } = await publicApi.post(this.endpoint + '/authenticate', authenticateData);
     this.setToken(data.token);
     userService.setUser(data.employee);
   }
 
   async register(registerData: RegisterData) {
-    const { data } = await publicApi.post('user/register', registerData);
+    const { data } = await publicApi.post(this.endpoint + '/register', registerData);
     this.setToken(data.token);
     userService.setUser(data.employee);
+  }
+
+  logout() {
+    this.setToken('');
+    localStorage.removeItem('token');
+    userService.setUser(null);
   }
 }
 

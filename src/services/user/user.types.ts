@@ -1,7 +1,17 @@
-import { IUser } from '../../interfaces/IUser';
+import { IUser } from '../../interfaces';
 
 export interface IUserService {
+  endpoint: 'users';
   user$: IUser | null;
+  users$: IUser[];
   getUser: () => void;
-  logout: () => void;
+  getUsers: () => void;
+  updateUser: (updateUserData: UpdateUserData) => void;
+  changePassword: (oldPassword: string, newPassword: string) => void;
 }
+
+export type UpdateUserData = {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+};
