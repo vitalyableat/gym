@@ -1,9 +1,20 @@
 export interface IWorkout {
   id: number;
   time: string;
-  price: string;
+  date: string;
+  price: number;
   trainerId: number;
   userId: number;
+  type: WorkoutTypeEnum;
+}
+
+export interface WorkoutDTO {
+  id: number;
+  time: string;
+  date: string;
+  price: number;
+  trainer: string;
+  user: string;
   type: WorkoutTypeEnum;
 }
 
