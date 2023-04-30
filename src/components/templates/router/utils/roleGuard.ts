@@ -1,5 +1,5 @@
 import { RouteNames } from '../router.types';
-import { UserRoleEnum } from '../../../../interfaces/IUser';
+import { UserRoleEnum } from '../../../../interfaces';
 import { userService } from '../../../../services/user';
 
 export const roleGuard = (roles: UserRoleEnum[]) => () =>
