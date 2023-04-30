@@ -4,7 +4,6 @@ export const Wrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 500px;
   min-width: 150px;
   position: relative;
 `;

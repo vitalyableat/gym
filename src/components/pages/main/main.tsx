@@ -9,6 +9,15 @@ import { Application } from '../../entities/application';
 import { Transaction } from '../../entities/transaction';
 import { User } from '../../entities/user';
 import { Workout } from '../../entities/workout';
+import { LoginForm } from '../../forms/login-form';
+import { SignupForm } from '../../forms/signup-form';
+import { CardForm } from '../../forms/card-form';
+import { SubscriptionForm } from '../../forms/subscription-form';
+import { ApplicationForm } from '../../forms/application-form';
+import { TrainerInfoForm } from '../../forms/trainer-info-form';
+import { UserInfoForm } from '../../forms/user-info-form';
+import { ChangePasswordForm } from '../../forms/change-password-form';
+import { WorkoutForm } from '../../forms/workout-form';
 
 export const Main: FC = () => {
   return (
@@ -34,10 +43,9 @@ export const Main: FC = () => {
       <Column gap="10px">
         <Card
           card={{ number: '9999999999999999', owner: 'VITALYA BLEAT', month: '12', year: '28' }}
-          onClick={() => {}}
         />
         <Subscription
-          subscription={{ id: 1, from: '2018-01-01', to: '2024-01-01', userId: 1, price: 99.99 }}
+          subscription={{ id: 1, from: '2018-01-01', to: '2024-01-01', price: 99.99 }}
         />
         <Trainer
           trainer={{
@@ -87,7 +95,8 @@ export const Main: FC = () => {
             firstName: 'Vitalya',
             lastName: 'Olhov',
             phoneNumber: '+375291739141',
-            role: UserRoleEnum.USER
+            role: UserRoleEnum.USER,
+            banned: false
           }}
         />
         <Workout
@@ -96,9 +105,36 @@ export const Main: FC = () => {
             time: '20:00',
             date: '2023-12-20',
             price: 99.99,
-            trainer: 'Илюха',
-            user: 'Виталя',
+            trainer: { id: 1, firstName: 'Илюха', lastName: 'На массе :D' },
+            user: { id: 1, firstName: 'Виталя', lastName: 'не может набрать массу :(' },
             type: WorkoutTypeEnum.GYM
+          }}
+        />
+        <LoginForm />
+        <SignupForm />
+        <CardForm
+          card={{
+            id: 1,
+            number: '1111222233334444',
+            validityDate: '12/24',
+            owner: 'VITALYA BLEAT',
+            status: true
+          }}
+        />
+        <SubscriptionForm />
+        <ApplicationForm />
+        <TrainerInfoForm />
+        <UserInfoForm />
+        <ChangePasswordForm />
+        <WorkoutForm
+          time="10:00"
+          date="2023-12-12"
+          price={50}
+          trainer={{
+            id: 1,
+            firstName: 'Илюха',
+            lastName: 'На массе',
+            type: [WorkoutTypeEnum.GYM, WorkoutTypeEnum.CROSSFIT]
           }}
         />
       </Column>

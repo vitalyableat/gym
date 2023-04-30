@@ -1,6 +1,7 @@
 export { Divider } from './divider';
 export { Input } from './input';
 export { Loader } from './loader';
+export { Message } from './message';
 
 export { Button } from './button';
 export { Column } from './column';

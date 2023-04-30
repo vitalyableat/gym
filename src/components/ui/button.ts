@@ -5,7 +5,6 @@ export const Button = styled.button`
   font-size: 16px;
   color: #fff;
   width: 100%;
-  max-width: 500px;
   height: 40px;
 
   :hover {

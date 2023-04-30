@@ -40,6 +40,13 @@ class UserService implements IUserService {
     this.setUser(data);
   }
 
+  async changeStatus(id: number) {
+    await privateApi.put(this.endpoint + '/changeStatus/' + id);
+    this.setUsers(
+      this.users$.map((user) => (user.id === id ? { ...user, banned: !user.banned } : user))
+    );
+  }
+
   async changePassword(oldPassword: string, newPassword: string) {
     await privateApi.put(this.endpoint + '/changePassword', { oldPassword, newPassword });
   }

@@ -4,4 +4,9 @@ export { type ISubscription } from './ISubscription';
 export { type ITrainer } from './ITrainer';
 export { type ITransaction, type TransactionDTO, TransactionTypeEnum } from './ITransaction';
 export { type IUser, UserRoleEnum } from './IUser';
-export { type IWorkout, type WorkoutDTO, WorkoutTypeEnum } from './IWorkout';
+export {
+  type IWorkout,
+  type WorkoutDTO,
+  type WorkoutPersonResponse,
+  WorkoutTypeEnum
+} from './IWorkout';

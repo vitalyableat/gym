@@ -1,17 +1,17 @@
 export interface IAuthService {
   endpoint: 'user';
   token$: string;
-  authenticate: (authenticateData: AuthenticateData) => void;
-  register: (registerData: RegisterData) => void;
+  login: (loginData: LoginData) => void;
+  signup: (signupData: SignupData) => void;
   logout: () => void;
 }
 
-export type AuthenticateData = {
+export type LoginData = {
   email: string;
   password: string;
 };
 
-export type RegisterData = {
+export type SignupData = {
   firstName: string;
   lastName: string;
   email: string;
