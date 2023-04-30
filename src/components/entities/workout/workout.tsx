@@ -23,11 +23,11 @@ export const Workout: FC<WorkoutProps> = ({ workout }) => {
       </Text>
       <Text>
         <b>Клиент: </b>
-        {workout.user}
+        {workout.user.firstName} {workout.user.lastName}
       </Text>
       <Text>
         <b>Тренер: </b>
-        {workout.trainer}
+        {workout.trainer.firstName} {workout.trainer.lastName}
       </Text>
       <Text>
         <b>Стоимость: </b>${workout.price}

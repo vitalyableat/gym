@@ -3,5 +3,4 @@ export interface ISubscription {
   price: number;
   from: string;
   to: string;
-  userId: number;
 }

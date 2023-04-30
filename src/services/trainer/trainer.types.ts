@@ -2,6 +2,7 @@ import { ITrainer } from '../../interfaces';
 
 export interface ITrainerService {
   endpoint: 'trainers';
+  trainer$: ITrainer | null;
   trainers$: ITrainer[];
   applications$: ITrainer[];
   getTrainers: () => void;

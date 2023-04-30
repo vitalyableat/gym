@@ -4,7 +4,6 @@ export interface IWorkout {
   date: string;
   price: number;
   trainerId: number;
-  userId: number;
   type: WorkoutTypeEnum;
 }
 
@@ -13,9 +12,15 @@ export interface WorkoutDTO {
   time: string;
   date: string;
   price: number;
-  trainer: string;
-  user: string;
+  trainer: WorkoutPersonResponse;
+  user: WorkoutPersonResponse;
   type: WorkoutTypeEnum;
+}
+
+export interface WorkoutPersonResponse {
+  id: number;
+  firstName: string;
+  lastName: string;
 }
 
 export enum WorkoutTypeEnum {

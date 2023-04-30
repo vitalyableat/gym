@@ -5,9 +5,11 @@ export interface IUser {
   lastName: string;
   phoneNumber: string;
   role: UserRoleEnum;
+  banned: boolean;
 }
 
 export enum UserRoleEnum {
   ADMIN = 'ADMIN',
+  TRAINER = 'TRAINER',
   USER = 'USER'
 }

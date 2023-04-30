@@ -6,5 +6,6 @@ export enum RouteNames {
   LOGIN = '/login',
   MAIN = '/',
   SIGNUP = '/signup',
-  WORKOUTS = '/workouts'
+  WORKOUTS = '/workouts',
+  PROFILE = '/profile'
 }

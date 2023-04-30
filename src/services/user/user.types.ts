@@ -7,6 +7,7 @@ export interface IUserService {
   getUser: () => void;
   getUsers: () => void;
   updateUser: (updateUserData: UpdateUserData) => void;
+  changeStatus: (id: number) => void;
   changePassword: (oldPassword: string, newPassword: string) => void;
 }
 

@@ -5,16 +5,23 @@ import { ITrainerService } from './trainer.types';
 
 class TrainerService implements ITrainerService {
   endpoint = 'trainers' as const;
+  trainer$: ITrainer | null = null;
   trainers$: ITrainer[] = [];
   applications$: ITrainer[] = [];
 
   constructor() {
     makeObservable(this, {
+      trainer$: observable,
+      setTrainer: action,
       trainers$: observable,
       setTrainers: action,
       applications$: observable,
       setApplications: action
     });
+  }
+
+  setTrainer(trainer: ITrainer | null) {
+    this.trainer$ = trainer;
   }
 
   setTrainers(trainers: ITrainer[]) {
@@ -50,7 +57,8 @@ class TrainerService implements ITrainerService {
   }
 
   async updateTrainer(trainer: Omit<ITrainer, 'email' | 'accepted'>) {
-    await privateApi.put(this.endpoint, trainer);
+    const { data } = await privateApi.put(this.endpoint, trainer);
+    this.setTrainer(data);
   }
 }
 

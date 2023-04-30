@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { PageWrap } from '../../ui';
-import { AuthorizationForm } from '../../forms/authorization-form';
+import { LoginForm } from '../../forms/login-form';
 
 export const Login: FC = () => {
   return (
     <PageWrap>
-      <AuthorizationForm />
+      <LoginForm />
     </PageWrap>
   );
 };
