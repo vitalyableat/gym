@@ -22,7 +22,7 @@ export const Navbar = styled.div`
 export const StyledLink = styled(Link)<{ selected: boolean }>`
   text-decoration: none;
   line-height: 20px;
-  color: ${({ selected }) => (selected ? '#6666ee' : '#4242aa')};
+  color: ${({ selected }) => (selected ? '#bbddff' : '#4242aa')};
   white-space: nowrap;
 
   :hover {
