@@ -1,38 +1,55 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { cardFormDataToCardAdapter, cardToCardFormDataAdapter } from './adapters';
 import { CardFormData, CardFormProps } from './card-form.types';
 import { cardService } from '../../../services/card';
-import { Button, Form, Input, Loader, Row, Text } from '../../ui';
+import { Button, Form, Input, Loader, Message, Row, Text } from '../../ui';
 import { Card } from '../../entities/card';
 import { ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import { MdDelete } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
-import { RouteNames } from '../../templates/router/router.types';
 
-export const CardForm: FC<CardFormProps> = ({ card }) => {
-  const navigate = useNavigate();
+export const CardForm: FC<CardFormProps> = ({ card, resetSelectedCard }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
   const {
     register,
     handleSubmit,
     getValues,
+    watch,
+    setValue,
+    reset,
     formState: { errors }
   } = useForm<CardFormData>({
     defaultValues: cardToCardFormDataAdapter(card)
   });
+
+  useEffect(() => {
+    const formData = cardToCardFormDataAdapter(card);
+    setValue('number', formData.number);
+    setValue('month', formData.month);
+    setValue('owner', formData.owner);
+    setValue('year', formData.year);
+  }, [card, setValue]);
 
   const onSubmit = (data: CardFormData) => {
     setIsLoading(true);
     card
       ? cardService
           .updateCard({ ...cardFormDataToCardAdapter(data), id: card.id })
-          .then(() => navigate(RouteNames.PROFILE))
+          .then(() => {
+            resetSelectedCard();
+            reset();
+            setMessage('Данные карты успешно обновлены');
+          })
           .finally(() => setIsLoading(false))
       : cardService
           .addCard(cardFormDataToCardAdapter(data))
-          .then(() => navigate(RouteNames.PROFILE))
+          .then(() => {
+            resetSelectedCard();
+            reset();
+            setMessage('Карта успешно добавлена');
+          })
           .finally(() => setIsLoading(false));
   };
 
@@ -40,7 +57,11 @@ export const CardForm: FC<CardFormProps> = ({ card }) => {
     setIsLoading(true);
     cardService
       .deleteCard(id)
-      .then(() => navigate(RouteNames.PROFILE))
+      .then(() => {
+        resetSelectedCard();
+        reset();
+        setMessage('Вы успешно удалили карту');
+      })
       .finally(() => setIsLoading(false));
   };
 
@@ -48,12 +69,19 @@ export const CardForm: FC<CardFormProps> = ({ card }) => {
     setIsLoading(true);
     cardService
       .setActive(id)
-      .then(() => navigate(RouteNames.PROFILE))
+      .then(() => {
+        resetSelectedCard();
+        reset();
+        setMessage('Вы успешно установили новую карту активной');
+      })
       .finally(() => setIsLoading(false));
   };
 
+  watch();
+
   return (
     <>
+      {!!message && <Message message={message} closeMessage={() => setMessage('')} />}
       {isLoading && <Loader />}
       <Form onSubmit={handleSubmit(onSubmit)}>
         {isLoading && <Loader />}

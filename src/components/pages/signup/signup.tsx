@@ -1,5 +1,11 @@
 import { FC } from 'react';
+import { PageWrap } from '../../ui';
+import { SignupForm } from '../../forms/signup-form';
 
 export const Signup: FC = () => {
-  return <div></div>;
+  return (
+    <PageWrap>
+      <SignupForm />
+    </PageWrap>
+  );
 };

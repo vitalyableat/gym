@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Button, Form, Input, Loader, Text } from '../../ui';
+import { Button, Divider, Form, FormLink, Input, Loader, Text } from '../../ui';
 import { authService, LoginData } from '../../../services/auth';
 import { emailRegex } from '../../../utils';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +14,8 @@ export const LoginForm: FC = () => {
     register,
     handleSubmit,
     watch,
+    reset,
+    setError,
     formState: { errors }
   } = useForm<LoginData>({ defaultValues: { email: '', password: '' } });
 
@@ -21,7 +23,12 @@ export const LoginForm: FC = () => {
     setIsLoading(true);
     authService
       .login(data)
-      .then(() => navigate(RouteNames.MAIN))
+      .then(() => navigate(RouteNames.PROFILE))
+      .catch(() => {
+        reset();
+        setError('email', { message: 'Неверный логин или пароль' });
+        setError('password', { message: 'Неверный логин или пароль' });
+      })
       .finally(() => setIsLoading(false));
   };
 
@@ -53,6 +60,8 @@ export const LoginForm: FC = () => {
           })}
         />
         <Button type="submit">ВОЙТИ</Button>
+        <Divider>ИЛИ</Divider>
+        <FormLink to={RouteNames.SIGNUP} link="Зарегистрироваться" text="Все еще нет аккаунта?" />
       </Form>
     </>
   );

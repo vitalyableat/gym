@@ -1,12 +1,13 @@
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Button, Form, Input, Loader, Text } from '../../ui';
+import { Button, Form, Input, Loader, Message, Text } from '../../ui';
 import { userService } from '../../../services/user';
 import { UpdateUserData } from '../../../services/user/user.types';
 
 export const UserInfoForm: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isMessageOpen, setMessageOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -22,11 +23,20 @@ export const UserInfoForm: FC = () => {
 
   const onSubmit = (data: UpdateUserData) => {
     setIsLoading(true);
-    userService.updateUser(data).finally(() => setIsLoading(false));
+    userService
+      .updateUser(data)
+      .then(() => setMessageOpen(true))
+      .finally(() => setIsLoading(false));
   };
 
   return (
     <>
+      {isMessageOpen && (
+        <Message
+          message="Личная информация успешно обновлена"
+          closeMessage={() => setMessageOpen(false)}
+        />
+      )}
       {isLoading && <Loader />}
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Text type="header">Личная информация устарела?!</Text>

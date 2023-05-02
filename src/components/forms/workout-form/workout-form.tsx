@@ -1,30 +1,47 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Button, Form, Input, Loader, Message, Select, Text } from '../../ui';
-import { IWorkout, WorkoutTypeEnum } from '../../../interfaces';
-import { WorkoutFormProps } from './workout-form.types';
+import { Button, Column, Form, Input, Loader, Message, Select, Text } from '../../ui';
+import { BuyWorkoutData, IWorkout, WorkoutTypeEnum } from '../../../interfaces';
 import { workoutService } from '../../../services/workout';
 import { WORKOUT_TYPE_NAMES } from '../../../constants';
 
-export const WorkoutForm: FC<WorkoutFormProps> = ({ time, date, price, trainer }) => {
+export const WorkoutForm: FC<{ buyWorkoutData?: BuyWorkoutData }> = ({ buyWorkoutData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isMessageOpen, setMessageOpen] = useState(false);
-  const { register, handleSubmit } = useForm<Omit<IWorkout, 'id'>>({
+  const [error, setError] = useState('');
+  const { register, reset, setValue, handleSubmit } = useForm<Omit<IWorkout, 'id'>>({
     defaultValues: {
-      time: time,
-      date: date,
-      price: price,
-      trainerId: trainer.id,
-      type: trainer.type[0]
+      time: buyWorkoutData?.time,
+      date: buyWorkoutData?.date,
+      price: buyWorkoutData?.price,
+      trainerId: buyWorkoutData?.trainer?.id,
+      type: buyWorkoutData?.trainer?.type[0]
     }
   });
+
+  useEffect(() => {
+    if (buyWorkoutData) {
+      setValue('time', buyWorkoutData.time);
+      setValue('date', buyWorkoutData.date);
+      setValue('price', buyWorkoutData.price);
+      setValue('trainerId', buyWorkoutData.trainer.id);
+      setValue('type', buyWorkoutData.trainer.type[0]);
+    }
+  }, [buyWorkoutData, setValue]);
 
   const onSubmit = (data: Omit<IWorkout, 'id'>) => {
     setIsLoading(true);
     workoutService
       .buyWorkout(data)
-      .then(() => setMessageOpen(true))
+      .then(() => {
+        reset();
+        setMessageOpen(true);
+      })
+      .catch((error) => {
+        reset();
+        setError(error?.message);
+      })
       .finally(() => setIsLoading(false));
   };
 
@@ -37,22 +54,30 @@ export const WorkoutForm: FC<WorkoutFormProps> = ({ time, date, price, trainer }
           closeMessage={() => setMessageOpen(false)}
         />
       )}
+      {!!error && <Message header="Ошибочка" message={error} closeMessage={() => setError('')} />}
       <Form onSubmit={handleSubmit(onSubmit)}>
         {isLoading && <Loader />}
-        <Text type="header">Хочешь привести себя в форму к лету?</Text>
+        <Column>
+          <Text type="header">Хочешь привести себя в форму?</Text>
+          {!buyWorkoutData && (
+            <Text color="darkred"> Выбери тренера и запишись на тренировку!</Text>
+          )}
+        </Column>
         <Text bold>
-          {trainer.firstName} {trainer.lastName}
+          {buyWorkoutData?.trainer?.firstName} {buyWorkoutData?.trainer?.lastName}
         </Text>
-        <Input type="date" disabled {...register('date')} />
-        <Input disabled {...register('time')} />
-        <Select {...register('type', { required: 'Это поле обязательно', valueAsNumber: true })}>
-          {trainer.type.map((option: WorkoutTypeEnum) => (
+        <Input disabled placeholder="Дата" {...register('date')} />
+        <Input disabled placeholder="Время" {...register('time')} />
+        <Select {...register('type', { required: 'Это поле обязательно' })}>
+          {buyWorkoutData?.trainer?.type.map((option: WorkoutTypeEnum) => (
             <option key={option} value={option}>
               {WORKOUT_TYPE_NAMES[option]}
             </option>
           ))}
         </Select>
-        <Text type="header">${price.toFixed(2)}</Text>
+        <Text type="header">
+          ${buyWorkoutData?.price && (buyWorkoutData?.price / 100).toFixed(2)}
+        </Text>
         <Button type="submit">Оплатить</Button>
       </Form>
     </>

@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 
 import { Button, Form, Input, Loader, Message, Text } from '../../ui';
 import { userService } from '../../../services/user';
+import { trainerService } from '../../../services/trainer';
+import { getFromLocalStorage } from '../../../utils';
 
 export const ChangePasswordForm: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -11,6 +13,8 @@ export const ChangePasswordForm: FC = () => {
     register,
     handleSubmit,
     watch,
+    setError,
+    reset,
     formState: { errors }
   } = useForm<{ oldPassword: string; newPassword: string }>({
     defaultValues: { oldPassword: '', newPassword: '' }
@@ -18,9 +22,23 @@ export const ChangePasswordForm: FC = () => {
 
   const onSubmit = (data: { oldPassword: string; newPassword: string }) => {
     setIsLoading(true);
-    userService
-      .changePassword(data.oldPassword, data.newPassword)
-      .then(() => setMessageOpen(true))
+    (getFromLocalStorage('trainer')
+      ? trainerService.changePassword(
+          data.oldPassword,
+          data.newPassword,
+          trainerService?.trainer$?.email as string
+        )
+      : userService.changePassword(data.oldPassword, data.newPassword)
+    )
+      .then(() => {
+        reset();
+        setMessageOpen(true);
+      })
+      .catch((error) => {
+        reset();
+        setError('oldPassword', { message: error?.message });
+        setError('newPassword', { message: error?.message });
+      })
       .finally(() => setIsLoading(false));
   };
 

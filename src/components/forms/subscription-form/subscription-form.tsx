@@ -1,20 +1,19 @@
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Button, Form, Input, Loader, Select, Text } from '../../ui';
-import { useNavigate } from 'react-router-dom';
+import { Button, Form, Input, Loader, Message, Select, Text } from '../../ui';
 import { addMonths, getDate } from '../../../utils';
 import { SUBSCRIPTION_PRICES } from './subscription-form.constants';
 import { subscriptionService } from '../../../services/subscription';
-import { RouteNames } from '../../templates/router/router.types';
 
 export const SubscriptionForm: FC = () => {
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [isMessageOpen, setMessageOpen] = useState(false);
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors }
   } = useForm<{ from: string; period: number }>({
     defaultValues: { from: getDate(), period: 1 }
@@ -28,16 +27,25 @@ export const SubscriptionForm: FC = () => {
         to: addMonths(data.from, data.period),
         price: SUBSCRIPTION_PRICES[watch('period')]
       })
-      .then(() => navigate(RouteNames.PROFILE))
+      .then(() => {
+        reset();
+        setMessageOpen(true);
+      })
       .finally(() => setIsLoading(false));
   };
 
   return (
     <>
+      {isMessageOpen && (
+        <Message
+          message="Вы успешно преобрели абонемент"
+          closeMessage={() => setMessageOpen(false)}
+        />
+      )}
       {isLoading && <Loader />}
       <Form onSubmit={handleSubmit(onSubmit)}>
         {isLoading && <Loader />}
-        <Text type="header">Ввыберите абонемент, который вам подходит :D</Text>
+        <Text type="header">Выберите абонемент, который вам подходит :D</Text>
         <Input
           type="date"
           min={getDate()}

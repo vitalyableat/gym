@@ -1,20 +1,28 @@
 import { action, makeObservable, observable } from 'mobx';
 import { privateApi } from '../index';
-import { IWorkout } from '../../interfaces';
+import { BuyWorkoutData, IWorkout, WorkoutDTO } from '../../interfaces';
 import { IWorkoutService } from './workout.types';
+import { getDate } from '../../utils';
 
 class WorkoutService implements IWorkoutService {
   endpoint = 'workouts' as const;
-  workouts$: IWorkout[] = [];
+  buyWorkoutData$: BuyWorkoutData = {} as BuyWorkoutData;
+  workouts$: WorkoutDTO[] = [];
 
   constructor() {
     makeObservable(this, {
+      buyWorkoutData$: observable,
+      setByWorkoutData: action,
       workouts$: observable,
       setWorkouts: action
     });
   }
 
-  setWorkouts(workouts: IWorkout[]) {
+  setByWorkoutData(buyWorkoutData: BuyWorkoutData) {
+    this.buyWorkoutData$ = buyWorkoutData;
+  }
+
+  setWorkouts(workouts: WorkoutDTO[]) {
     this.workouts$ = workouts;
   }
 
@@ -24,7 +32,7 @@ class WorkoutService implements IWorkoutService {
   }
 
   async getTrainerWorkouts(id: number) {
-    const { data } = await privateApi.get(this.endpoint + '/' + id);
+    const { data } = await privateApi.get(this.endpoint + '/week/' + id + '/' + getDate());
     this.setWorkouts(data);
   }
 

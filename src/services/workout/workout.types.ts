@@ -1,8 +1,9 @@
-import { IWorkout } from '../../interfaces';
+import { BuyWorkoutData, IWorkout, WorkoutDTO } from '../../interfaces';
 
 export interface IWorkoutService {
   endpoint: 'workouts';
-  workouts$: IWorkout[];
+  buyWorkoutData$: BuyWorkoutData;
+  workouts$: WorkoutDTO[];
   getWorkouts: () => void;
   getTrainerWorkouts: (id: number) => void;
   buyWorkout: (card: Omit<IWorkout, 'id'>) => void;

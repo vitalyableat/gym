@@ -28,9 +28,9 @@ class CardService implements ICardService {
     this.setCards([...this.cards$, data]);
   }
 
-  async updateCard(card: Omit<ICard, 'status'>) {
-    const { data } = await privateApi.put(this.endpoint, card);
-    this.setCards(this.cards$.map((card) => (card.id === card.id ? data : card)));
+  async updateCard(updatedCard: Omit<ICard, 'status'>) {
+    const { data } = await privateApi.put(this.endpoint, updatedCard);
+    this.setCards(this.cards$.map((card) => (card.id === updatedCard.id ? data : card)));
   }
 
   async deleteCard(id: number) {
@@ -39,7 +39,7 @@ class CardService implements ICardService {
   }
 
   async setActive(id: number) {
-    const { data } = await privateApi.put(this.endpoint + '/' + id + '/setStatus');
+    const { data } = await privateApi.put(this.endpoint + '/' + id + '/setActive');
     this.setCards(data);
   }
 }

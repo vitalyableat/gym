@@ -10,7 +10,9 @@ export const Transaction: FC<TransactionProps> = ({ transaction }) => {
       <Text type="header" bold center>
         Транзакция
       </Text>
-      <Text center>{transaction.time}</Text>
+      <Text center>
+        {transaction.time.split('T')[0]} {transaction.time.split('T')[1].slice(0, 5)}
+      </Text>
       <Text>
         <b>Тип: </b>
         {TRANSACTION_TYPE_NAMES[transaction.type]}
@@ -21,7 +23,7 @@ export const Transaction: FC<TransactionProps> = ({ transaction }) => {
       </Text>
       <Text>
         <b>Плательщик: </b>
-        {transaction.user}
+        {transaction.userFullName}
       </Text>
     </S.Transaction>
   );

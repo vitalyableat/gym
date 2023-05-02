@@ -1,15 +1,17 @@
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Button, Form, Input, Loader, Row, Text } from '../../ui';
+import { Button, Divider, Form, FormLink, Input, Loader, Message, Row, Text } from '../../ui';
 import { emailRegex } from '../../../utils';
 import { ITrainer, WorkoutTypeEnum } from '../../../interfaces';
 import { trainerService } from '../../../services/trainer';
 import { WORKOUT_TYPE_NAMES } from '../../../constants';
 import { AiOutlineBorder, AiOutlineCheckSquare } from 'react-icons/ai';
+import { RouteNames } from '../../templates/router/router.types';
 
 export const ApplicationForm: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isMessageOpen, setMessageOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -17,6 +19,7 @@ export const ApplicationForm: FC = () => {
     setValue,
     setError,
     clearErrors,
+    reset,
     formState: { errors }
   } = useForm<Omit<ITrainer, 'id' | 'accepted'>>({
     defaultValues: {
@@ -24,23 +27,38 @@ export const ApplicationForm: FC = () => {
       firstName: '',
       lastName: '',
       phoneNumber: '',
-      price: undefined,
-      type: []
+      priceForWorkout: '',
+      workoutTypes: []
     }
   });
 
   const onSubmit = (data: Omit<ITrainer, 'id' | 'accepted'>) => {
-    if (!watch('type').length) {
-      setError('type', { type: 'custom', message: 'Нужно выбрать хотя бы один тип тренировки' });
+    if (!watch('workoutTypes').length) {
+      setError('workoutTypes', {
+        type: 'custom',
+        message: 'Нужно выбрать хотя бы один тип тренировки'
+      });
     } else {
       setIsLoading(true);
-      trainerService.applyForTrainer(data).finally(() => setIsLoading(false));
+      trainerService
+        .applyForTrainer({ ...data, priceForWorkout: (+data.priceForWorkout * 100).toString() })
+        .then(() => {
+          reset();
+          setMessageOpen(true);
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
   return (
     <>
       {isLoading && <Loader />}
+      {isMessageOpen && (
+        <Message
+          message="Заявление на устройство тренером успешно подано"
+          closeMessage={() => setMessageOpen(false)}
+        />
+      )}
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Text type="header">Хотите стать тренером?</Text>
         <Input
@@ -85,9 +103,9 @@ export const ApplicationForm: FC = () => {
         <Input
           validator="price"
           placeholder="Стоимость тренировки"
-          value={watch('price')}
-          error={errors.price?.message}
-          {...register('price', {
+          value={watch('priceForWorkout')}
+          error={errors.priceForWorkout?.message}
+          {...register('priceForWorkout', {
             required: 'Это поле обязательно'
           })}
         />
@@ -96,14 +114,14 @@ export const ApplicationForm: FC = () => {
         </Text>
         {Object.entries(WORKOUT_TYPE_NAMES).map(([key, value]) => (
           <Row key={key} gap="10px">
-            {watch('type').includes(key as WorkoutTypeEnum) ? (
+            {watch('workoutTypes').includes(key as WorkoutTypeEnum) ? (
               <AiOutlineCheckSquare
                 size={20}
                 cursor="pointer"
                 onClick={() =>
                   setValue(
-                    'type',
-                    watch('type').filter((type) => type !== key)
+                    'workoutTypes',
+                    watch('workoutTypes').filter((type) => type !== key)
                   )
                 }
               />
@@ -112,16 +130,20 @@ export const ApplicationForm: FC = () => {
                 size={20}
                 cursor="pointer"
                 onClick={() => {
-                  clearErrors('type');
-                  setValue('type', [...watch('type'), key as WorkoutTypeEnum]);
+                  clearErrors('workoutTypes');
+                  setValue('workoutTypes', [...watch('workoutTypes'), key as WorkoutTypeEnum]);
                 }}
               />
             )}
             <Text>{value}</Text>
           </Row>
         ))}
-        {!!errors.type?.message && <Text color="darkred">{errors.type?.message}</Text>}
+        {!!errors.workoutTypes?.message && (
+          <Text color="darkred">{errors.workoutTypes?.message}</Text>
+        )}
         <Button type="submit">Отправить</Button>
+        <Divider>ИЛИ</Divider>
+        <FormLink to={RouteNames.LOGIN} link="Войдите в систему" text="Вы уже тренер?" />
       </Form>
     </>
   );

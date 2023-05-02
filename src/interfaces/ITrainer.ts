@@ -6,7 +6,11 @@ export interface ITrainer {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  price: number;
-  accepted: boolean;
-  type: WorkoutTypeEnum[];
+  priceForWorkout: string;
+  isAcceptedRequest: boolean;
+  workoutTypes: WorkoutTypeEnum[];
+}
+
+export interface FreeTime {
+  [key: string]: string[];
 }
