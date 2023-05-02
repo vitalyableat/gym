@@ -23,8 +23,6 @@ export enum RouteNames {
   PROFILE = '/profile',
   CHANGE_PASSWORD = '/change-password',
   CARDS = '/cards',
-  SUBSCRIPTIONS = '/subscriptions',
-  BUY_SUBSCRIPTION = '/buy-subscription',
-  MY_WORKOUTS = 'my-workouts',
-  BUY_WORKOUT = 'buy-workout'
+  MY_SUBSCRIPTIONS = '/my-subscriptions',
+  MY_WORKOUTS = '/my-workouts'
 }

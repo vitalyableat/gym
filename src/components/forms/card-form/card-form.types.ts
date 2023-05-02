@@ -2,6 +2,7 @@ import { ICard } from '../../../interfaces';
 
 export interface CardFormProps {
   card?: ICard;
+  resetSelectedCard: () => void;
 }
 
 export interface CardFormData {

@@ -2,37 +2,32 @@ import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button, Divider, Form, FormLink, Input, Loader, Text } from '../../ui';
-import { authService, SignupData } from '../../../services/auth';
+import { authService, LoginData } from '../../../services/auth';
 import { emailRegex } from '../../../utils';
 import { useNavigate } from 'react-router-dom';
 import { RouteNames } from '../../templates/router/router.types';
 
-export const SignupForm: FC = () => {
+export const TrainerLoginForm: FC = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
     watch,
-    resetField,
     setError,
+    reset,
     formState: { errors }
-  } = useForm<SignupData>({
-    defaultValues: { firstName: '', lastName: '', email: '', password: '' }
-  });
+  } = useForm<LoginData>({ defaultValues: { email: '', password: '' } });
 
-  const onSubmit = (data: SignupData) => {
+  const onSubmit = (data: LoginData) => {
     setIsLoading(true);
     authService
-      .signup(data)
-      .then(() => navigate(RouteNames.PROFILE))
+      .loginAsTrainer(data)
+      .then(() => navigate(RouteNames.PERSONAL_ACCOUNT))
       .catch(() => {
-        resetField('email');
-        setError(
-          'email',
-          { message: 'Пользователь с такой почтой уже существует' },
-          { shouldFocus: true }
-        );
+        reset();
+        setError('email', { message: 'Неверный логин или пароль' });
+        setError('password', { message: 'Неверный логин или пароль' });
       })
       .finally(() => setIsLoading(false));
   };
@@ -41,25 +36,7 @@ export const SignupForm: FC = () => {
     <>
       {isLoading && <Loader />}
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Text type="header">Если у вас нет аккаунта – зарегистрируйтесь!</Text>
-        <Input
-          validator="text"
-          placeholder="Имя"
-          value={watch('firstName')}
-          error={errors.firstName?.message}
-          {...register('firstName', {
-            required: 'Это поле обязательно'
-          })}
-        />
-        <Input
-          validator="text"
-          placeholder="Фамилия"
-          value={watch('lastName')}
-          error={errors.lastName?.message}
-          {...register('lastName', {
-            required: 'Это поле обязательно'
-          })}
-        />
+        <Text type="header">Войти как тренер</Text>
         <Input
           placeholder="Логин"
           value={watch('email')}
@@ -84,7 +61,11 @@ export const SignupForm: FC = () => {
         />
         <Button type="submit">ВОЙТИ</Button>
         <Divider>ИЛИ</Divider>
-        <FormLink to={RouteNames.LOGIN} link="Войдите в систему!" text="Уже есть аккаунт?" />
+        <FormLink
+          to={RouteNames.APPLY_FOR_A_JOB}
+          link="Заполните форму"
+          text="Хотите стать тренером?"
+        />
       </Form>
     </>
   );

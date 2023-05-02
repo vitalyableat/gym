@@ -6,6 +6,7 @@ export const Button = styled.button`
   color: #fff;
   width: 100%;
   height: 40px;
+  max-width: 500px;
 
   :hover {
     cursor: pointer;

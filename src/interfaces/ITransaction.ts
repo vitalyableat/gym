@@ -3,18 +3,19 @@ export interface ITransaction {
   time: string;
   price: number;
   type: TransactionTypeEnum;
-  userId: number;
-}
-
-export interface TransactionDTO {
-  id: number;
-  time: string;
-  price: number;
-  type: TransactionTypeEnum;
-  user: string;
+  userFullName: number;
 }
 
 export enum TransactionTypeEnum {
-  WORKOUT = 'WORKOUT',
-  SUBSCRIPTION = 'SUBSCRIPTION'
+  CROSSFIT = 'CROSSFIT',
+  FITNESS = 'FITNESS',
+  PILATES = 'PILATES',
+  GYM = 'GYM',
+  YOGA = 'YOGA',
+  GROUP = 'GROUP',
+  ZUMBA = 'ZUMBA',
+  ONE_MONTH = 'ONE_MONTH',
+  THREE_MONTH = 'THREE_MONTH',
+  SIX_MONTH = 'SIX_MONTH',
+  ONE_YEAR = 'ONE_YEAR'
 }

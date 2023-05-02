@@ -13,6 +13,7 @@ export const Navbar = styled.div`
   z-index: 2;
   padding: 20px 80px;
   gap: 20px;
+  min-width: 900px;
 
   div:first-child {
     flex-grow: 1;

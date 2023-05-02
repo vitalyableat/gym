@@ -1,7 +1,8 @@
 export interface IAuthService {
-  endpoint: 'user';
+  endpoint: 'auth';
   token$: string;
   login: (loginData: LoginData) => void;
+  loginAsTrainer: (loginData: LoginData) => void;
   signup: (signupData: SignupData) => void;
   logout: () => void;
 }

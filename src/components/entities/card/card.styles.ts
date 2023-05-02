@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Card = styled.div`
   height: 180px;
-  width: 300px;
+  min-width: 300px;
   background-color: #bbddff;
   outline: 2px solid #1d1d1f;
   position: relative;

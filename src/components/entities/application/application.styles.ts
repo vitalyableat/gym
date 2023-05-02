@@ -8,4 +8,13 @@ export const Application = styled.div`
   gap: 10px;
   display: flex;
   flex-direction: column;
+  position: relative;
+`;
+
+export const IconWrap = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
 `;

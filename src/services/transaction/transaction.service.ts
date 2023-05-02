@@ -19,7 +19,7 @@ class TransactionService implements ITransactionService {
   }
 
   async getTransactions(from: string, to: string) {
-    const { data } = await privateApi.get(this.endpoint, { params: { from, to } });
+    const { data } = await privateApi.get(this.endpoint + '/' + from + '/' + to);
     this.setCards(data);
   }
 }

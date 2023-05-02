@@ -30,7 +30,7 @@ export const Workout: FC<WorkoutProps> = ({ workout }) => {
         {workout.trainer.firstName} {workout.trainer.lastName}
       </Text>
       <Text>
-        <b>Стоимость: </b>${workout.price}
+        <b>Стоимость: </b>${(workout.price / 100).toFixed(2)}
       </Text>
     </S.Workout>
   );

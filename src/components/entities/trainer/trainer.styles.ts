@@ -8,6 +8,15 @@ export const Trainer = styled.div`
   gap: 10px;
   display: flex;
   flex-direction: column;
+  position: relative;
+`;
+
+export const IconWrap = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
 `;
 
 export const InfoIconWrap = styled.div`
@@ -29,4 +38,7 @@ export const Time = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  transform: scale(103%);
+  transition: 100ms ease-in-out transform;
 `;

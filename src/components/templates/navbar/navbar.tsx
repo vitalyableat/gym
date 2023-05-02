@@ -7,14 +7,16 @@ import { GUEST_LINKS, NAVBAR_LINKS } from './navbar.constants';
 import { userService } from '../../../services/user';
 import { Loader, Text } from '../../ui';
 import { authService } from '../../../services/auth';
+import { getFromLocalStorage } from '../../../utils';
+import { IUser, UserRoleEnum } from '../../../interfaces';
+import { trainerService } from '../../../services/trainer';
 
 export const Navbar: FC = observer(() => {
   const { pathname } = useLocation();
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    userService.getUser().finally(() => setIsLoading(false));
-  }, []);
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <>
@@ -35,7 +37,7 @@ export const Navbar: FC = observer(() => {
           )
         )}
       </S.Navbar>
-      {isLoading && <Loader />}
+      {/*{isLoading && <Loader />}*/}
       <Outlet />
     </>
   );

@@ -1,5 +1,5 @@
-import { TransactionDTO } from '../../../interfaces';
+import { ITransaction } from '../../../interfaces';
 
 export interface TransactionProps {
-  transaction: TransactionDTO;
+  transaction: ITransaction;
 }

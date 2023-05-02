@@ -31,7 +31,7 @@ class UserService implements IUserService {
   }
 
   async getUsers() {
-    const { data } = await privateApi.get(this.endpoint);
+    const { data } = await privateApi.get('admin/' + this.endpoint);
     this.setUsers(data);
   }
 
@@ -41,14 +41,17 @@ class UserService implements IUserService {
   }
 
   async changeStatus(id: number) {
-    await privateApi.put(this.endpoint + '/changeStatus/' + id);
+    await privateApi.put('admin/' + this.endpoint + '/changeStatus/' + id);
     this.setUsers(
       this.users$.map((user) => (user.id === id ? { ...user, banned: !user.banned } : user))
     );
   }
 
   async changePassword(oldPassword: string, newPassword: string) {
-    await privateApi.put(this.endpoint + '/changePassword', { oldPassword, newPassword });
+    await privateApi.put(this.endpoint + '/changePassword', {
+      oldPassword,
+      newPassword
+    });
   }
 }
 

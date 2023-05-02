@@ -23,6 +23,13 @@ export interface WorkoutPersonResponse {
   lastName: string;
 }
 
+export interface BuyWorkoutData {
+  time: string;
+  date: string;
+  price: number;
+  trainer: WorkoutPersonResponse & { type: WorkoutTypeEnum[] };
+}
+
 export enum WorkoutTypeEnum {
   CROSSFIT = 'CROSSFIT',
   FITNESS = 'FITNESS',
