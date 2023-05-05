@@ -4,7 +4,8 @@ export interface IWorkoutService {
   endpoint: 'workouts';
   buyWorkoutData$: BuyWorkoutData;
   workouts$: WorkoutDTO[];
+  workoutSchedule$: { [key: string]: WorkoutDTO[] };
   getWorkouts: () => void;
   getTrainerWorkouts: (id: number) => void;
-  buyWorkout: (card: Omit<IWorkout, 'id'>) => void;
+  buyWorkout: (workout: Omit<IWorkout, 'id'>) => void;
 }

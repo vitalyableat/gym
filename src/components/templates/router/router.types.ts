@@ -14,6 +14,7 @@ export enum RouteNames {
   TRAINERS = '/trainers',
   CLIENTS = '/clients',
   TRANSACTIONS = '/transactions',
+  STATISTICS = '/statistics',
 
   // TRAINER
   PERSONAL_ACCOUNT = '/personal-account',

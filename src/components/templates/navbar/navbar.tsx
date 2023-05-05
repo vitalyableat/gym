@@ -1,15 +1,12 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import * as S from './navbar.styles';
 import { GUEST_LINKS, NAVBAR_LINKS } from './navbar.constants';
 import { userService } from '../../../services/user';
-import { Loader, Text } from '../../ui';
+import { Text } from '../../ui';
 import { authService } from '../../../services/auth';
-import { getFromLocalStorage } from '../../../utils';
-import { IUser, UserRoleEnum } from '../../../interfaces';
-import { trainerService } from '../../../services/trainer';
 
 export const Navbar: FC = observer(() => {
   const { pathname } = useLocation();
@@ -37,7 +34,6 @@ export const Navbar: FC = observer(() => {
           )
         )}
       </S.Navbar>
-      {/*{isLoading && <Loader />}*/}
       <Outlet />
     </>
   );

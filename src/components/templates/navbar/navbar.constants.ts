@@ -32,6 +32,7 @@ const ADMIN_LINKS: Link[] = [
   { name: 'Тренеры', link: RouteNames.TRAINERS },
   { name: 'Клиенты', link: RouteNames.CLIENTS },
   { name: 'Транзакции', link: RouteNames.TRANSACTIONS },
+  { name: 'Статистика', link: RouteNames.STATISTICS },
   { name: 'Выйти', link: RouteNames.LOGIN }
 ];
 

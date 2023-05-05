@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Style = styled.div`
+export const FaqStyles = styled.div`
   height: 180px;
   min-width: 300px;
   background-color: #bbddff;

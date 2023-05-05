@@ -27,6 +27,7 @@ class AuthService implements IAuthService {
     this.setToken(data.token);
     userService.setUser(data.userResponse);
     trainerService.setTrainer(null);
+    return data.userResponse.role;
   }
 
   async loginAsTrainer(authenticateData: LoginData) {

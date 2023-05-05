@@ -6,6 +6,7 @@ import { authService, LoginData } from '../../../services/auth';
 import { emailRegex } from '../../../utils';
 import { useNavigate } from 'react-router-dom';
 import { RouteNames } from '../../templates/router/router.types';
+import { UserRoleEnum } from '../../../interfaces';
 
 export const LoginForm: FC = () => {
   const navigate = useNavigate();
@@ -23,7 +24,9 @@ export const LoginForm: FC = () => {
     setIsLoading(true);
     authService
       .login(data)
-      .then(() => navigate(RouteNames.PROFILE))
+      .then((role) =>
+        navigate(role === UserRoleEnum.USER ? RouteNames.PROFILE : RouteNames.APPLICATIONS)
+      )
       .catch(() => {
         reset();
         setError('email', { message: 'Неверный логин или пароль' });

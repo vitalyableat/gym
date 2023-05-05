@@ -24,6 +24,7 @@ import { Applications } from '../../pages/applications';
 import { Trainers } from '../../pages/trainers';
 import { Clients } from '../../pages/clients';
 import { Transactions } from '../../pages/transactions';
+import { Statistics } from '../../pages/statistics';
 
 import { PersonalAccount } from '../../pages/personal-account';
 import { Schedule } from '../../pages/schedule';
@@ -80,6 +81,7 @@ export const Router: FC = observer(() => {
               <Route path={RouteNames.TRAINERS} element={<Trainers />} />
               <Route path={RouteNames.CLIENTS} element={<Clients />} />
               <Route path={RouteNames.TRANSACTIONS} element={<Transactions />} />
+              <Route path={RouteNames.STATISTICS} element={<Statistics />} />
             </Route>
 
             <Route element={<ProtectedRoute guard={roleGuard([UserRoleEnum.TRAINER])} />}>

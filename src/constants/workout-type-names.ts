@@ -6,6 +6,6 @@ export const WORKOUT_TYPE_NAMES: { [key in WorkoutTypeEnum]: string } = {
   PILATES: 'Пилатес',
   GYM: 'Тренажерный зал',
   YOGA: 'Йога',
-  GROUP: 'Групповые тренировки',
+  GROUP: 'Групповые занятия',
   ZUMBA: 'Зумба'
 };

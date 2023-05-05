@@ -23,7 +23,10 @@ export const Workouts: FC = observer(() => {
       {trainerService.trainers$.map((trainer) => (
         <Trainer key={trainer.id} trainer={trainer} setBuyWorkoutData={setBuyWorkoutData} />
       ))}
-      <WorkoutForm buyWorkoutData={buyWorkoutData} />
+      <WorkoutForm
+        buyWorkoutData={buyWorkoutData}
+        resetTrainer={() => setBuyWorkoutData(undefined)}
+      />
     </PageWrap>
   );
 });
