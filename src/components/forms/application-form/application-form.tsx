@@ -8,6 +8,9 @@ import { trainerService } from '../../../services/trainer';
 import { WORKOUT_TYPE_NAMES } from '../../../constants';
 import { AiOutlineBorder, AiOutlineCheckSquare } from 'react-icons/ai';
 import { RouteNames } from '../../templates/router/router.types';
+import { BiUser } from 'react-icons/bi';
+import { MdDriveFileRenameOutline } from 'react-icons/md';
+import { BsTelephoneOutboundFill } from 'react-icons/bs';
 
 export const ApplicationForm: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +65,7 @@ export const ApplicationForm: FC = () => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Text type="header">Хотите стать тренером?</Text>
         <Input
+          Icon={<BiUser />}
           validator="text"
           placeholder="Имя"
           value={watch('firstName')}
@@ -71,6 +75,7 @@ export const ApplicationForm: FC = () => {
           })}
         />
         <Input
+          Icon={<MdDriveFileRenameOutline />}
           validator="text"
           placeholder="Фамилия"
           value={watch('lastName')}
@@ -80,6 +85,7 @@ export const ApplicationForm: FC = () => {
           })}
         />
         <Input
+          Icon={<BsTelephoneOutboundFill />}
           validator="integer"
           placeholder="Телефон"
           value={watch('phoneNumber')}

@@ -35,6 +35,7 @@ import { MySubscriptions } from '../../pages/my-subscriptions';
 import { MyWorkouts } from '../../pages/my-workouts';
 import { getFromLocalStorage } from '../../../utils';
 import { trainerService } from '../../../services/trainer';
+import { authService } from '../../../services/auth';
 
 export const Router: FC = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
@@ -46,7 +47,9 @@ export const Router: FC = observer(() => {
       trainerService.setTrainer(trainer);
       setIsLoading(false);
     } else {
-      userService.getUser().finally(() => setIsLoading(false));
+      authService.token$
+        ? userService.getUser().finally(() => setIsLoading(false))
+        : setIsLoading(false);
     }
   }, []);
 
