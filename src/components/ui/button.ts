@@ -7,6 +7,7 @@ export const Button = styled.button`
   width: 100%;
   height: 40px;
   max-width: 500px;
+  padding: 0 20px;
 
   :hover {
     cursor: pointer;

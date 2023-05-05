@@ -19,7 +19,7 @@ export const Transaction: FC<TransactionProps> = ({ transaction }) => {
       </Text>
       <Text>
         <b>Сумма: </b>
-        {transaction.price}
+        {(transaction.price / 100).toFixed(2)}
       </Text>
       <Text>
         <b>Плательщик: </b>

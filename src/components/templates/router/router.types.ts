@@ -3,7 +3,6 @@ export enum RouteNames {
   MAIN = '/',
   ABOUT = '/about',
   WORKOUTS = '/workouts',
-  FAQ = '/faq',
   CONTACTS = '/contacts',
   LOGIN = '/login',
   SIGNUP = '/signup',
@@ -14,6 +13,7 @@ export enum RouteNames {
   TRAINERS = '/trainers',
   CLIENTS = '/clients',
   TRANSACTIONS = '/transactions',
+  STATISTICS = '/statistics',
 
   // TRAINER
   PERSONAL_ACCOUNT = '/personal-account',

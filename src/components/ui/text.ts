@@ -5,6 +5,7 @@ interface TextProps {
   bold?: boolean;
   color?: string;
   center?: boolean;
+  width?: string;
 }
 
 export const Text = styled.div<TextProps>`
@@ -12,4 +13,5 @@ export const Text = styled.div<TextProps>`
   font-weight: ${({ bold }) => bold && 'bold'};
   color: ${({ color }) => color};
   text-align: ${({ center }) => center && 'center'};
+  width: ${({ width }) => width};
 `;

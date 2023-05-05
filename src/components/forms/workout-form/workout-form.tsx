@@ -2,11 +2,12 @@ import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button, Column, Form, Input, Loader, Message, Select, Text } from '../../ui';
-import { BuyWorkoutData, IWorkout, WorkoutTypeEnum } from '../../../interfaces';
+import { IWorkout, WorkoutTypeEnum } from '../../../interfaces';
 import { workoutService } from '../../../services/workout';
 import { WORKOUT_TYPE_NAMES } from '../../../constants';
+import { WorkoutFormProps } from './workout-form.types';
 
-export const WorkoutForm: FC<{ buyWorkoutData?: BuyWorkoutData }> = ({ buyWorkoutData }) => {
+export const WorkoutForm: FC<WorkoutFormProps> = ({ buyWorkoutData, resetTrainer }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isMessageOpen, setMessageOpen] = useState(false);
   const [error, setError] = useState('');
@@ -36,10 +37,12 @@ export const WorkoutForm: FC<{ buyWorkoutData?: BuyWorkoutData }> = ({ buyWorkou
       .buyWorkout(data)
       .then(() => {
         reset();
+        resetTrainer();
         setMessageOpen(true);
       })
       .catch((error) => {
         reset();
+        resetTrainer();
         setError(error?.message);
       })
       .finally(() => setIsLoading(false));
@@ -54,7 +57,7 @@ export const WorkoutForm: FC<{ buyWorkoutData?: BuyWorkoutData }> = ({ buyWorkou
           closeMessage={() => setMessageOpen(false)}
         />
       )}
-      {!!error && <Message header="Ошибочка" message={error} closeMessage={() => setError('')} />}
+      {!!error && <Message header="Упс..." message={error} closeMessage={() => setError('')} />}
       <Form onSubmit={handleSubmit(onSubmit)}>
         {isLoading && <Loader />}
         <Column>
