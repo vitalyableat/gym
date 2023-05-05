@@ -1,7 +1,9 @@
+import { UserRoleEnum } from '../../interfaces';
+
 export interface IAuthService {
   endpoint: 'auth';
   token$: string;
-  login: (loginData: LoginData) => void;
+  login: (loginData: LoginData) => Promise<UserRoleEnum>;
   loginAsTrainer: (loginData: LoginData) => void;
   signup: (signupData: SignupData) => void;
   logout: () => void;

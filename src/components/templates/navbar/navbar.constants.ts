@@ -23,7 +23,7 @@ const USER_LINKS: Link[] = [
 
 const TRAINER_LINKS: Link[] = [
   { name: 'Личный кабинет', link: RouteNames.PERSONAL_ACCOUNT },
-  { name: 'Рассписание', link: RouteNames.SCHEDULE },
+  { name: 'Расписание', link: RouteNames.SCHEDULE },
   { name: 'Выйти', link: RouteNames.LOGIN }
 ];
 
@@ -32,6 +32,7 @@ const ADMIN_LINKS: Link[] = [
   { name: 'Тренеры', link: RouteNames.TRAINERS },
   { name: 'Клиенты', link: RouteNames.CLIENTS },
   { name: 'Транзакции', link: RouteNames.TRANSACTIONS },
+  { name: 'Статистика', link: RouteNames.STATISTICS },
   { name: 'Выйти', link: RouteNames.LOGIN }
 ];
 

@@ -24,6 +24,7 @@ import { Applications } from '../../pages/applications';
 import { Trainers } from '../../pages/trainers';
 import { Clients } from '../../pages/clients';
 import { Transactions } from '../../pages/transactions';
+import { Statistics } from '../../pages/statistics';
 
 import { PersonalAccount } from '../../pages/personal-account';
 import { Schedule } from '../../pages/schedule';
@@ -35,6 +36,7 @@ import { MySubscriptions } from '../../pages/my-subscriptions';
 import { MyWorkouts } from '../../pages/my-workouts';
 import { getFromLocalStorage } from '../../../utils';
 import { trainerService } from '../../../services/trainer';
+import { authService } from '../../../services/auth';
 
 export const Router: FC = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
@@ -46,7 +48,9 @@ export const Router: FC = observer(() => {
       trainerService.setTrainer(trainer);
       setIsLoading(false);
     } else {
-      userService.getUser().finally(() => setIsLoading(false));
+      authService.token$
+        ? userService.getUser().finally(() => setIsLoading(false))
+        : setIsLoading(false);
     }
   }, []);
 
@@ -77,6 +81,7 @@ export const Router: FC = observer(() => {
               <Route path={RouteNames.TRAINERS} element={<Trainers />} />
               <Route path={RouteNames.CLIENTS} element={<Clients />} />
               <Route path={RouteNames.TRANSACTIONS} element={<Transactions />} />
+              <Route path={RouteNames.STATISTICS} element={<Statistics />} />
             </Route>
 
             <Route element={<ProtectedRoute guard={roleGuard([UserRoleEnum.TRAINER])} />}>
