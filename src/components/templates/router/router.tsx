@@ -14,6 +14,7 @@ import { NotFound } from '../../pages/not-found';
 import { Main } from '../../pages/main';
 import { About } from '../../pages/about';
 import { Workouts } from '../../pages/workouts';
+import { Faq } from '../../pages/faq';
 import { Contacts } from '../../pages/contacts';
 import { Login } from '../../pages/login';
 import { Signup } from '../../pages/signup';
@@ -35,6 +36,7 @@ import { MySubscriptions } from '../../pages/my-subscriptions';
 import { MyWorkouts } from '../../pages/my-workouts';
 import { getFromLocalStorage } from '../../../utils';
 import { trainerService } from '../../../services/trainer';
+import { authService } from '../../../services/auth';
 
 export const Router: FC = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
@@ -46,7 +48,9 @@ export const Router: FC = observer(() => {
       trainerService.setTrainer(trainer);
       setIsLoading(false);
     } else {
-      userService.getUser().finally(() => setIsLoading(false));
+      authService.token$
+        ? userService.getUser().finally(() => setIsLoading(false))
+        : setIsLoading(false);
     }
   }, []);
 
@@ -63,6 +67,7 @@ export const Router: FC = observer(() => {
               <Route path={RouteNames.MAIN} element={<Main />} />
               <Route path={RouteNames.ABOUT} element={<About />} />
               <Route path={RouteNames.WORKOUTS} element={<Workouts />} />
+              <Route path={RouteNames.FAQ} element={<Faq />} />
               <Route path={RouteNames.CONTACTS} element={<Contacts />} />
               <Route path={RouteNames.LOGIN} element={<Login />} />
               <Route path={RouteNames.SIGNUP} element={<Signup />} />
@@ -89,6 +94,7 @@ export const Router: FC = observer(() => {
               <Route path={RouteNames.MAIN} element={<Main />} />
               <Route path={RouteNames.ABOUT} element={<About />} />
               <Route path={RouteNames.WORKOUTS} element={<Workouts />} />
+              <Route path={RouteNames.FAQ} element={<Faq />} />
               <Route path={RouteNames.CONTACTS} element={<Contacts />} />
 
               <Route path={RouteNames.PROFILE} element={<Profile />} />
