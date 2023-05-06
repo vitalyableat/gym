@@ -3,7 +3,6 @@ export enum RouteNames {
   MAIN = '/',
   ABOUT = '/about',
   WORKOUTS = '/workouts',
-  FAQ = '/faq',
   CONTACTS = '/contacts',
   LOGIN = '/login',
   SIGNUP = '/signup',

@@ -6,7 +6,6 @@ export const GUEST_LINKS: Link[] = [
   { name: 'Главная', link: RouteNames.MAIN },
   { name: 'О нас', link: RouteNames.ABOUT },
   { name: 'Тренировки', link: RouteNames.WORKOUTS },
-  { name: 'FAQ', link: RouteNames.FAQ },
   { name: 'Контакты', link: RouteNames.CONTACTS },
   { name: 'Войти', link: RouteNames.LOGIN }
 ];
@@ -15,7 +14,6 @@ const USER_LINKS: Link[] = [
   { name: 'Главная', link: RouteNames.MAIN },
   { name: 'О нас', link: RouteNames.ABOUT },
   { name: 'Тренировки', link: RouteNames.WORKOUTS },
-  { name: 'FAQ', link: RouteNames.FAQ },
   { name: 'Контакты', link: RouteNames.CONTACTS },
   { name: 'Профиль', link: RouteNames.PROFILE },
   { name: 'Выйти', link: RouteNames.LOGIN }
