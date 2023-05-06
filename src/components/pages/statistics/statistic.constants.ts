@@ -1,3 +1,5 @@
+import { ChartOptions } from 'chart.js';
+
 export const BACKGROUND_COLORS = [
   'rgba(255, 99, 132, 0.2)',
   'rgba(54, 162, 235, 0.2)',
@@ -17,3 +19,17 @@ export const BORDER_COLORS = [
   'rgba(255, 159, 64, 1)',
   'rgba(255, 159, 64, 0.2)'
 ];
+
+export const OPTIONS: ChartOptions<'pie'> = {
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: 'right',
+      labels: {
+        font: {
+          size: 14
+        }
+      }
+    }
+  }
+};

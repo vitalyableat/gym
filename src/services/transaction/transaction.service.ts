@@ -10,17 +10,17 @@ class TransactionService implements ITransactionService {
   constructor() {
     makeObservable(this, {
       transactions$: observable,
-      setCards: action
+      setTransactions: action
     });
   }
 
-  setCards(transactions: ITransaction[]) {
+  setTransactions(transactions: ITransaction[]) {
     this.transactions$ = transactions;
   }
 
   async getTransactions(from: string, to: string) {
     const { data } = await privateApi.get(this.endpoint + '/' + from + '/' + to);
-    this.setCards(data);
+    this.setTransactions(data);
   }
 }
 
