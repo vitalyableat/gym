@@ -4,6 +4,8 @@ import { observer } from 'mobx-react-lite';
 
 import { userService } from '../../../services/user';
 import { IUser, UserRoleEnum } from '../../../interfaces';
+import { getFromLocalStorage } from '../../../utils';
+import { trainerService } from '../../../services/trainer';
 
 import { Navbar } from '../navbar';
 import { RouteNames } from './router.types';
@@ -33,9 +35,6 @@ import { ChangePassword } from '../../pages/change-password';
 import { Cards } from '../../pages/cards';
 import { MySubscriptions } from '../../pages/my-subscriptions';
 import { MyWorkouts } from '../../pages/my-workouts';
-import { getFromLocalStorage } from '../../../utils';
-import { trainerService } from '../../../services/trainer';
-import { authService } from '../../../services/auth';
 
 export const Router: FC = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
@@ -47,7 +46,7 @@ export const Router: FC = observer(() => {
       trainerService.setTrainer(trainer);
       setIsLoading(false);
     } else {
-      authService.token$
+      getFromLocalStorage('token')
         ? userService.getUser().finally(() => setIsLoading(false))
         : setIsLoading(false);
     }
@@ -85,7 +84,6 @@ export const Router: FC = observer(() => {
             <Route element={<ProtectedRoute guard={roleGuard([UserRoleEnum.TRAINER])} />}>
               <Route path={RouteNames.PERSONAL_ACCOUNT} element={<PersonalAccount />} />
               <Route path={RouteNames.SCHEDULE} element={<Schedule />} />
-              <Route path={RouteNames.CHANGE_PASSWORD} element={<ChangePassword />} />
             </Route>
 
             <Route element={<ProtectedRoute guard={roleGuard([UserRoleEnum.USER])} />}>
@@ -95,11 +93,12 @@ export const Router: FC = observer(() => {
               <Route path={RouteNames.CONTACTS} element={<Contacts />} />
 
               <Route path={RouteNames.PROFILE} element={<Profile />} />
-              <Route path={RouteNames.CHANGE_PASSWORD} element={<ChangePassword />} />
               <Route path={RouteNames.CARDS} element={<Cards />} />
               <Route path={RouteNames.MY_SUBSCRIPTIONS} element={<MySubscriptions />} />
               <Route path={RouteNames.MY_WORKOUTS} element={<MyWorkouts />} />
             </Route>
+
+            <Route path={RouteNames.CHANGE_PASSWORD} element={<ChangePassword />} />
           </Route>
 
           <Route path={RouteNames.NOT_FOUND} element={<NotFound />} />
